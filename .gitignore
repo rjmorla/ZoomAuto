@@ -1,3 +1,7 @@
 .venv/
 .vscode/
+__pycache__/
 zoomSheet/
+test.py
+throughBrowser.py
+zoomSheet/zoomSheet.xlsx
