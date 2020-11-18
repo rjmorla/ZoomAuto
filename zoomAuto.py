@@ -55,12 +55,6 @@ def signOut():
 def joinBreakoutRoom():
     print("To be implemented")
 
-def testPassword():
-    signIn('test', 'yeppers')
-
-def testNoPassword():
-    signIn('test', 'nan')
-
 def parseExcel(df):
     while True:
         currentTime = datetime.now().strftime("%H:%M")
