@@ -16,15 +16,16 @@ def runSearch(target):
 
 def signIn(meetingID, pw):
     #open zoom app
-    os.startfile(r"C:\Users\roymo\AppData\Roaming\Zoom\bin\zoom.exe")
+    os.startfile(r"C:\Users\Roy\AppData\Roaming\Zoom\bin\zoom.exe")
     print('File opened successfully')
 
     #join a meeting button
-    target = r"C:\myWorkspace\zoomauto\zoomButtons\joinBtn.PNG"
+    
+    target = os.path.join(os.path.dirname(__file__), 'zoomButtons\joinBtn.PNG')
     pyautogui.click(runSearch(target))
     print('clicked join btn')
 
-    target = r"C:\myWorkspace\zoomauto\zoomButtons\meetingIDTextField.PNG"
+    target = os.path.join(os.path.dirname(__file__), 'zoomButtons\meetingIDTextField.PNG')
     pyautogui.click(runSearch(target))
     pyautogui.write(meetingID)
     print('meetingID entered')
@@ -32,16 +33,18 @@ def signIn(meetingID, pw):
     #check if class has pw or not
     if (pw == 'nan'):
         print('No password found for meeting')
-        target = r"C:\myWorkspace\zoomauto\zoomButtons\joinMeetingBtn.PNG"
+        
+        target = os.path.join(os.path.dirname(__file__), 'zoomButtons\joinMeetingBtn.PNG')
         pyautogui.click(runSearch(target))
     else:
         print('Password found for meeting')
-        passcode=pyautogui.locateCenterOnScreen(r"C:\myWorkspace\zoomauto\zoomButtons\meetingPasscode.PNG")
+        
+        passcode=pyautogui.locateCenterOnScreen(os.path.join(os.path.dirname(__file__), 'zoomButtons\meetingPasscode.PNG'))
         pyautogui.moveTo(passcode)
         pyautogui.write(pw)
         time.sleep(1)
-
-        joinWithPassword=pyautogui.locateCenterOnScreen(r"C:\myWorkspace\zoomauto\zoomButtons\joinMeetingBtnPassword.PNG")
+        
+        joinWithPassword=pyautogui.locateCenterOnScreen(os.path.join(os.path.dirname(__file__), 'zoomButtons\joinMeetingBtnPassword.PNG'))
         pyautogui.moveTo(joinWithPassword)
         pyautogui.click()
         time.sleep(2)
@@ -65,6 +68,7 @@ def parseExcel(df):
         time.sleep(2)
 
         if currentDay in df['Day'] and currentTime in str(df['Timings']):
+            df["Timings"] = pd.to_datetime(df['Timings'], format='%H:%M')
             mylist=df["Timings"]
             mylist=[i.strftime("%H:%M") for i in mylist]
             c= [i for i in range(len(mylist)) if mylist[i]==currentTime]
@@ -77,7 +81,7 @@ def parseExcel(df):
             print('signed in')
             break
 
-excelFile = os.path.join(os.path.dirname(__file__), 'zoomSheet\zoomSheet.xlsx')
-df = pd.read_excel(excelFile,index_col=False)
-parseExcel(df)
-print("Excel file read")
+# excelFile = os.path.join(os.path.dirname(__file__), 'zoomSheet\zoomSheet.xlsx')
+# df = pd.read_excel(excelFile,index_col=False)
+# parseExcel(df)
+# print("Excel file read")
