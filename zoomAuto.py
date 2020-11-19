@@ -9,26 +9,31 @@ from datetime import datetime
 def runSearch(target):
     coordinates = None
     count = 0
-    while coordinates == None or count < 5:
-        coordinates = pyautogui.locateCenterOnScreen(target, grayscale=True, confidence=.8)
+    while coordinates == None and count < 20:
+        print('Searching for button')
+        coordinates = pyautogui.locateCenterOnScreen(target, grayscale=True, confidence=.7)
         count += 1
     return coordinates
 
 def signIn(meetingID, pw):
     #open zoom app
-    os.startfile(r"C:\Users\Roy\AppData\Roaming\Zoom\bin\zoom.exe")
+    os.startfile(r"C:\Users\Roy\AppData\Roaming\Zoom\bin\Zoom.exe")
     print('File opened successfully')
-
+    time.sleep(1)
     #join a meeting button
     
     target = os.path.join(os.path.dirname(__file__), 'zoomButtons\joinBtn.PNG')
+    print('Found Button in file')
     pyautogui.click(runSearch(target))
     print('clicked join btn')
 
     target = os.path.join(os.path.dirname(__file__), 'zoomButtons\meetingIDTextField.PNG')
+    time.sleep(1)
     pyautogui.click(runSearch(target))
-    pyautogui.write(meetingID)
+    time.sleep(1)
+    pyautogui.write(meetingID,interval=.1)
     print('meetingID entered')
+    time.sleep(1)
     
     #check if class has pw or not
     if (pw == 'nan'):
